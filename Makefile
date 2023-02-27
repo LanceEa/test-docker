@@ -60,5 +60,5 @@ e2e-test: kubectl
 
 .PHONY: push-image
 push-image:
-	docker tag test-image:latest "docker.io/parsec86/test-image:$(git rev-parse --short=12 HEAD)"
-	docker push "docker.io/parsec86/test-image:$(git rev-parse --short=12 HEAD)"
+	docker tag test-image:latest "docker.io/parsec86/test-image:${git rev-parse --short=12 HEAD}"
+	docker push "docker.io/parsec86/test-image:${git rev-parse --short=12 HEAD}"
