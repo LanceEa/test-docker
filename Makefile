@@ -55,7 +55,7 @@ load-image-tar: build
 .PHONY: e2e-test
 e2e-test: kubectl
 	kubectl apply -f deployment.yaml
-	kubectl wait --for=condition=available --timeout=30s test-deployment deployments
+	kubectl wait --for=condition=available --timeout=60s --all deployments
 
 
 .PHONY: push-image
