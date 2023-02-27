@@ -60,5 +60,5 @@ e2e-test: kubectl
 
 .PHONY: push-image
 push-image:
-	docker tag test-image:latest "docker.io/parsec86/test-image:awesome
+	docker tag test-image:latest "docker.io/parsec86/test-image:awesome"
 	docker push "docker.io/parsec86/test-image:awesome"
