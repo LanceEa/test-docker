@@ -60,7 +60,5 @@ e2e-test: kubectl
 
 .PHONY: push-image
 push-image:
-	MY_TAG=$(git rev-parse --short=12 "$GITHUB_SHA")
-	echo $MY_TAG
-	docker tag test-image:latest "docker.io/parsec86/test-image:$MY_TAG"
-	docker push "docker.io/parsec86/test-image:$MY_TAG"
+	docker tag test-image:latest "docker.io/parsec86/test-image:awesome
+	docker push "docker.io/parsec86/test-image:awesome"
