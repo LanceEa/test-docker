@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: test-image
-        image: test-image:latest
+        image: k3d-myregistry.localhost:12345/test-image:latest
         ports:
         - containerPort: 80
         resources:
