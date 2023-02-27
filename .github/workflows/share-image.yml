@@ -1,0 +1,72 @@
+name: image-sharing
+
+on:
+  pull_request: {}
+  push: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: build image
+        run: make build
+
+      - name: upload image
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-image
+          path: /tmp/test-image.tar
+  test:
+    runs-on: ubuntu-latest
+    needs: ["build"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: |
+          make load-image-tar
+
+      - name: Setup k3d
+        run: |
+          make ci/setup-k3d
+        
+      - name: load-k3d-registry
+        run: |
+          make load-k3d-registry
+
+      - name: deploy to k3d
+        run:
+          make e2e-test
+  publish:
+    runs-on: ubuntu-latest
+    needs: ["test"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: |
+          docker load --input /tmp/test-image.tar
+          docker image ls -a
+
+      - name: retag and push
+        run: |
+          make push-image
+
+      
